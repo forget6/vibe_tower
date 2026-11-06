@@ -1,0 +1,33 @@
+MIT License
+
+Copyright (c) 2026 Vibe Knowledge Tower contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+说明（非许可证正文，可删除）：
+
+- 本仓库为**方法论与文档型**项目。若你更倾向文档类许可，可整体替换为
+  CC-BY-4.0（署名即可复用）或 Apache-2.0（含专利授权）；替换后请同步
+  `README.md` §7 版本记录中的说明。
+- 版权署名刻意使用中性的 "Vibe Knowledge Tower contributors"，
+  以符合"不关联任何具体项目/组织"的定位；如需改为具名主体，直接替换上行即可。
+- 仓库内**不包含**任何第三方论文原文（`docs/research/*.pdf` 已被 `.gitignore` 排除）；
+  论文引用请遵循 `docs/research/research-base.md` §0 的约定并标注 arXiv 编号。
