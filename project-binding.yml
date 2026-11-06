@@ -1,0 +1,39 @@
+# 项目接入绑定（Project Binding）
+#
+# 用途：让"本项目用的是**哪版塔**、按**哪种载体**生效、各清单**在哪**"可机器核对
+#      （版本对账 + 载体缺口定位 + 即插即用）。
+# 归属：填写后的实例属于**项目**（含业务事实），MUST NOT 回写进塔。
+# 填法：标注 MUST 的字段不留空；路径一律**相对项目根**；无该项则留空并同步调整 binding_modes。
+# 依据：塔 `README` §4（部署与接入）、`core/03` §2（常驻约束）。
+
+tower:
+  version: ""            # MUST 塔版本（MUST 与塔 version.md 首行 / tower.json#version 一致）
+  commit: ""             # MUST 塔提交号（"跟随迭代"的凭据；升版即更新）
+  repo: ""               # MUST 塔仓库位置（clone 目标；例如与项目并列的目录）
+
+binding_modes: []        # MUST 载体（可多选）：session_init / project_convention_file / editor_rules / agent_skill
+entrypoints:
+  session_prompt: ""     # MUST 交给 Agent 的提示词（通常 = 塔 templates/prompt-guidelines.md + 项目上下文）
+  convention_file: ""    # 项目约定文件（如 AGENTS.md / CLAUDE.md / .cursor/rules/*；无则留空且上面去掉 project_convention_file）
+
+artifacts:               # 项目侧工件的**实际路径**（不存在 ⇒ "塔只被读过"）
+  functional_map: ""     # MUST 功能地图（条目 + 证据锚 + 未知项 + 时点）
+  standing_constraints: "" # MUST 常驻约束清单（机器判据 / 生效载体 / 只减基线 / 成熟度级别 / 下一级台阶）
+  scan_playbook: ""      # MUST 本项目扫描清单实例（判据 → 扫什么 → 命中即缺陷 → 怎么扫）
+  bug_to_rule: ""        # 缺陷归因记录（可用塔 templates/bug-to-rule-postmortem.md）
+
+gates:                   # 三处现场（MUST NOT 事后补档）
+  design_review_prescan: ""   # 设计评审预扫落点（评审清单 / PR 模板 / 脚本）
+  defect_first_scan: ""       # 缺陷定位"先扫后改"的落点
+  delivery_gate: ""           # 交付闸门内的校验落点（卡口命令）
+
+loop:                    # 三段闭环（★v0.23；★v0.25 修正口径）：事前规划 → 事中守卫 → 事后闭环演进
+  pre_plan: ""           # MUST 事前规划（动手前）：功能理解 / 规格节点 / 任务计划（每步带"验证："）/ 契约与断言先行 / 复用参照
+  during_guard: ""       # MUST 事中守卫（施工中）：常驻约束施工期生效 / 预扫与"先扫后改" / 安全关卡 / 不可委托区人工闸门
+  post_evolution: ""     # MUST 事后闭环演进（交付/缺陷后）：交付闸门校验 → 缺陷归因 → 去向（合并入塔 / 项目侧自留）
+
+checks: []               # 机器判据入口（可执行命令；例如 ["go test ./...", "npm test"]）
+
+version_sync:            # 版本对账（塔升版时逐项核对）
+  last_checked_at: ""    # 最近一次核对时间
+  drift_notes: ""        # 有偏差就写清：塔改了什么、项目侧同步了什么
