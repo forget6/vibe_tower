@@ -1,0 +1,117 @@
+{
+  "name": "vibe-tower",
+  "version": "1.00",
+  "updated": "2026-11-06",
+  "license": "MIT",
+  "read_first": ["README.md", "version.md"],
+  "quickstart": "README.md §4.1（一条命令把塔放进项目文件夹）→ §4.3（复制提示词给 AI 一次）；提示词真源 templates/init-prompt.md；缺陷处置（找 Bug / 修 Bug 四步：定性 → 取证 → 修因 → 固化）见 README §4.8",
+  "entrypoints": {
+    "adoption_guide": "docs/adoption-guide.md",
+    "recurrence_catalog": "docs/recurrence-catalog.md",
+    "init_prompt": "templates/init-prompt.md",
+    "session_prompt": "templates/prompt-guidelines.md",
+    "phases": "docs/agent-execution-phases.md",
+    "functional_map": "templates/functional-map.md",
+    "standing_constraints": "templates/standing-constraints.md",
+    "scan_playbook": "templates/scan-playbook.md",
+    "phase_gates": "templates/phase-gates.md",
+    "clone_diff": "templates/clone-diff.md",
+    "iteration_checkpoint": "templates/iteration-checkpoint.md",
+    "bug_to_rule": "templates/bug-to-rule-postmortem.md",
+    "project_binding": "templates/project-binding.yml",
+    "agent_skill": "skills/vibe-tower/SKILL.md",
+    "openspec_verify": "skills/vibe-tower/verify-openspec.ps1",
+    "task_modes": "templates/task-modes.md",
+    "gate": "skills/vibe-tower/scripts/gate.ps1",
+    "gate_method": "skills/vibe-tower/references/gate-method.md"
+  },
+  "core": [
+    "core/01-spec-engine.md",
+    "core/02-intent-contract.md",
+    "core/03-active-rules.md"
+  ],
+  "extensions": [
+    "extensions/01-security-gate.md",
+    "extensions/02-architecture-boundaries.md",
+    "extensions/03-formal-reasoning.md",
+    "extensions/04-stabilization-workflow.md",
+    "extensions/05-meta-evolution-loop.md",
+    "extensions/06-context-learning.md",
+    "extensions/07-analogical-reuse.md"
+  ],
+  "research": [
+    "docs/research/research-base.md",
+    "docs/research/paper-analysis-whitebook.md",
+    "docs/blueprint-basic-implementation.md"
+  ],
+  "adoption": {
+    "deploy": "推荐：把塔放进项目文件夹（例如 vibe-tower/）；备选：git submodule 或与项目并列",
+    "modes": ["session_init", "project_convention_file", "editor_rules", "agent_skill"],
+    "minimal_subset": [
+      "范围声明 + 规格节点",
+      "任务级契约 + 断言",
+      "四类安全关卡",
+      "TDD 的 RED 证据"
+    ],
+    "after_load": [
+      "把 templates/init-prompt.md 的提示词交给 AI 一次（读塔 → 产六件工件 → 自检）",
+      "建/刷新项目侧功能地图（每条附证据锚；未知项显式）",
+      "声明不可委托区",
+      "建常驻约束清单（含成熟度级别与下一级台阶）",
+      "落扫描清单实例（判据 → 可执行动作）",
+      "接线三处现场：设计评审预扫 / 缺陷定位先扫后改 / 交付闸门内校验",
+      "实例化六阶段闸门（templates/phase-gates.md → docs/vibe/phase-gates.md），并定下 design/apply/spec 三份报告路径",
+      "登记塔版本与提交号（版本对账）"
+    ],
+    "self_check": [
+      "功能地图有条目且有证据锚",
+      "常驻约束有机器判据 + 载体 + 成熟度级别 + 下一级台阶",
+      "扫描清单是本项目动作（非塔条目照抄）",
+      "三处现场有扫描记录",
+      "六阶段闸门各有产物，且三份报告含契约（锚定塔版本 / 产出时机 / 三值 / 被引用）",
+      "项目侧登记塔版本与提交号"
+    ]
+  },
+  "init": {
+    "prompt": "templates/init-prompt.md",
+    "produces": ["项目侧工件（人读）", "卡口（机器跑的守卫）", "对接配置（机器读）"],
+    "artifacts": [
+      {"id": "functional_map", "group": "artifact", "suggested": "docs/vibe/functional-map.md", "template": "templates/functional-map.md"},
+      {"id": "boundaries", "group": "artifact", "suggested": "docs/vibe/boundaries.md", "template": ""},
+      {"id": "standing_constraints", "group": "artifact", "suggested": "docs/vibe/standing-constraints.md", "template": "templates/standing-constraints.md"},
+      {"id": "scan_playbook", "group": "artifact", "suggested": "docs/vibe/scan-playbook.md", "template": "templates/scan-playbook.md"},
+      {"id": "phase_gates", "group": "artifact", "suggested": "docs/vibe/phase-gates.md", "template": "templates/phase-gates.md"},
+      {"id": "convention_file", "group": "artifact", "suggested": "AGENTS.md", "template": ""},
+      {"id": "gates", "group": "gate", "suggested": "scripts/vibe_gates/", "template": ""},
+      {"id": "project_binding", "group": "config", "suggested": "docs/vibe/project-binding.yml", "template": "templates/project-binding.yml"}
+    ],
+    "gates": [
+      {"id": "G1", "phase": "设计前", "trigger": "需求落 proposal 之前", "artifact": "proposal 内「判据引用」（≥3 条塔条目 + 对应卡口）"},
+      {"id": "G2", "phase": "设计后（冻结时）", "trigger": "设计 / 规格 / 任务冻结那一刻", "artifact": "<.../tower-design-check-v<塔版本>.md>"},
+      {"id": "G3", "phase": "实现前", "trigger": "写第一行实现代码之前", "artifact": "变更日志「实现前扫描」（命令 + 输出摘要）"},
+      {"id": "G4", "phase": "实现后", "trigger": "目标测试转绿之后", "artifact": "<.../tower-apply-check-v<塔版本>.md>"},
+      {"id": "G5", "phase": "校验（verify）", "trigger": "全量回归通过之后", "artifact": "<.../tower-spec-check-v<塔版本>.md>"},
+      {"id": "G6", "phase": "归档", "trigger": "校验无 Critical", "artifact": "塔提交号 + 项目绑定同步（版本 / 提交号）"}
+    ],
+    "report_contract": ["锚定塔版本（版本 + 提交号）", "产出时机（即时 / 补记（原因）；MUST NOT 伪装即时）", "逐项三值结论（已覆盖 / 缺陷 / 塔无条目）", "必须被交付文档或变更文档引用（防产物孤岛）", "MUST NOT 事后补档：漏做 ⇒ 该阶段未过闸门"],
+    "loop": [
+      "事前规划（动手前：功能理解为先 → 规格节点 → 任务每步带验证点 → 复用参照四分类差异清单 → 契约与断言先行）",
+      "事中守卫（施工中：常驻约束施工期生效 + 预扫与先扫后改 + 四类安全关卡 + 不可委托区人工闸门）",
+      "事后闭环演进（交付/缺陷后：交付闸门校验 → 缺陷归因 Bug→Rule → 去向：合并入塔 / 项目侧自留 → 塔升版同步）"
+    ],
+    "done_when": [
+      "三类产出（工件 / 卡口 / 对接配置）共七件存在，或显式声明本轮不做 + 原因（静默跳过 = 未完成）",
+      "卡口命令可执行且已跑通（附实际输出）",
+      "三段闭环各有落点（loop.pre_plan / loop.during_guard / loop.post_evolution），缺任一段 = 部署未完成",
+      "project_binding 的 tower.version 与塔 version.md 首行一致",
+      "standing_constraints 每条含机器判据 + 生效载体 + 成熟度级别 + 下一级台阶",
+      "scan_playbook 每行含可执行扫描动作",
+      "三处现场（设计评审预扫 / 缺陷定位先扫后改 / 交付闸门内校验）各有落点",
+      "六阶段闸门各有产物（G2 / G4 / G5 三份报告含契约：锚定塔版本 + 产出时机 + 三值），漏做 ⇒ 该阶段未过闸门",
+      "输出下一步三件事"
+    ]
+  },
+  "maturity_ladder": ["L0 散落", "L1 声明", "L2 机器保证", "L3 自净"],
+  "upgrade": "塔升版后先读 version.md 新增行，再同步项目侧：映射 / 扫描清单 / 绑定文件版本号",
+  "theory": "docs/research/research-base.md"
+}
